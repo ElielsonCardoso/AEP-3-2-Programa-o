@@ -1,22 +1,27 @@
 package br.unicesumar.AEP;
 
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Conceito {
 	@Id
 	private String id = UUID.randomUUID().toString();
-	@OneToOne(cascade=CascadeType.ALL)
+	private String nome;
+	
+	@OneToOne(mappedBy = "conceitos")
 	private Nota nota;
-	@OneToOne(cascade=CascadeType.ALL)
+	
+	@NotNull
+	@OneToOne(mappedBy = "conceitos")
 	private Avaliacao avaliacao;
-	@OneToMany(cascade=CascadeType.ALL)
-	private Aluno aluno;
+	
+	@NotNull
+	@OneToOne(mappedBy = "conceitos")
+	private Aluno aluno;	
 	
 	public Conceito(Nota nota, Avaliacao avaliacao, Aluno aluno) {
 		if(aluno != null) {
@@ -36,5 +41,21 @@ public class Conceito {
 	
 	public String getId() {
 		return this.id;
+	}
+	
+	public String getNome() {
+		return this.nome;
+	}
+	
+	public Nota getNota() {
+		return this.nota;
+	}
+	
+	public Aluno getAluno() {
+		return this.aluno;
+	}
+	
+	public Avaliacao getAvaliacao() {
+		return this.avaliacao;
 	}
 }
